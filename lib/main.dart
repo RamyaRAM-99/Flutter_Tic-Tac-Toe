@@ -23,11 +23,9 @@ class TicTacToeHomePage extends StatefulWidget {
 }
 
 class _TicTacToeHomePageState extends State<TicTacToeHomePage> {
-
-
   static const int gridSize = 3;
-  late List<List<String>> board;  // Initialize as late
-  late String currentPlayer;       // Initialize as late
+  late List<List<String>> board; // Initialize as late
+  late String currentPlayer; // Initialize as late
 
   @override
   void initState() {
@@ -55,15 +53,18 @@ class _TicTacToeHomePageState extends State<TicTacToeHomePage> {
     // Check rows and columns
     for (int i = 0; i < gridSize; i++) {
       if (board[i].every((cell) => cell == currentPlayer) ||
-          List.generate(gridSize, (j) => board[j][i]).every((cell) => cell == currentPlayer)) {
+          List.generate(gridSize, (j) => board[j][i])
+              .every((cell) => cell == currentPlayer)) {
         showWinnerDialog();
         return true;
       }
     }
 
     // Check diagonals
-    if (List.generate(gridSize, (i) => board[i][i]).every((cell) => cell == currentPlayer) ||
-        List.generate(gridSize, (i) => board[i][gridSize - i - 1]).every((cell) => cell == currentPlayer)) {
+    if (List.generate(gridSize, (i) => board[i][i])
+            .every((cell) => cell == currentPlayer) ||
+        List.generate(gridSize, (i) => board[i][gridSize - i - 1])
+            .every((cell) => cell == currentPlayer)) {
       showWinnerDialog();
       return true;
     }
@@ -81,10 +82,17 @@ class _TicTacToeHomePageState extends State<TicTacToeHomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Player $currentPlayer Wins!'),
+        title: Text(
+          'Player $currentPlayer Wins!',
+          style: TextStyle(color: Colors.black, fontSize: 16),
+        ),
         actions: [
           TextButton(
-            child: Text('Play Again'),
+            child: Text('Play Again',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20)),
             onPressed: () {
               Navigator.of(context).pop();
               setState(() {
@@ -121,29 +129,34 @@ class _TicTacToeHomePageState extends State<TicTacToeHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tic Tac Toe'),
+        title: Text(
+          'Tic Tac Toe',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+        ),
+        backgroundColor: Colors.blueGrey.shade800,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
           gridSize,
-              (row) => Row(
+          (row) => Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
               gridSize,
-                  (col) => GestureDetector(
+              (col) => GestureDetector(
                 onTap: () => handleTap(row, col),
                 child: Container(
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 2),
-                    color: Colors.white,
+                    border: Border.all(color: Colors.white, width: 1),
+                    color: Colors.blueGrey.shade800,
                   ),
                   child: Center(
                     child: Text(
                       board[row][col],
-                      style: TextStyle(fontSize: 40, color: Colors.black),
+                      style: TextStyle(fontSize: 40, color: Colors.white),
                     ),
                   ),
                 ),
